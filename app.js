@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -18,9 +19,10 @@ const users = require('./routes/api/users');
 // install middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 // setup routes
-app.get("/", (req, res) => res.send("Wassup"));
 app.use("/api/users", users);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
